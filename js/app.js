@@ -25,6 +25,15 @@ const products = [
         sizes: [35, 36, 37, 38, 39],
         description: "Sandalias azules casuales, cómodas y elegantes.",
         image: "images/sandalias-casuales.png"
+    },
+    {
+        id: "mono-cafe",
+        name: "Moño Café",
+        category: "Elegante",
+        price: 200,
+        sizes: [35, 36, 37, 38, 39],
+        description: "Sandalia café con moño decorativo y plantilla floral.",
+        image: "images/sandalia-mono-cafe.png"
     }
 ];
 
