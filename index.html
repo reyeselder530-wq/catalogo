@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M/R | Catálogo de Sandalias</title>
+    <!-- Google Fonts & Tailwind CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fcf8f6',
+                            100: '#f5ebe6',
+                            500: '#b87d64',
+                            600: '#9e6750',
+                            800: '#5c3a2b',
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Playfair Display"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-brand-50 font-sans text-brand-800 antialiased">
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-brand-100 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="font-serif text-3xl font-bold tracking-wider text-brand-800">M / R</span>
+                <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-brand-500 font-semibold border-l pl-3 border-brand-200">Sandalias Exclusivas</span>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="toggleCart()" class="relative bg-brand-100 text-brand-800 hover:bg-brand-500 hover:text-white px-4 py-2.5 rounded-full transition-all flex items-center space-x-2 shadow-sm">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                    <span class="font-semibold text-sm hidden sm:inline">Carrito</span>
+                    <span id="cart-counter" class="bg-brand-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative bg-brand-100/60 py-16 px-4 sm:px-6 text-center border-b border-brand-100">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="font-serif text-4xl sm:text-5xl font-bold text-brand-800 mb-4">Paso firme con estilo y elegancia</h1>
+            <p class="text-brand-600 text-lg mb-8">Descubre nuestra colección de sandalias diseñadas para cada momento de tu día.</p>
+            <div class="relative max-w-md mx-auto">
+                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-brand-500"></i>
+                <input type="text" id="search-input" oninput="filterProducts()" placeholder="Buscar modelo o estilo..." class="w-full pl-12 pr-4 py-3 bg-white border border-brand-200 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm">
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-10 pb-6 border-b border-brand-200 gap-4">
+            <div id="category-filters" class="flex flex-wrap gap-2 justify-center md:justify-start">
+                <button onclick="filterCategory('todos')" class="cat-btn px-5 py-2 rounded-full text-sm font-medium bg-brand-800 text-white transition-all shadow-sm">Todos</button>
+                <button onclick="filterCategory('Casual')" class="cat-btn px-5 py-2 rounded-full text-sm font-medium bg-white text-brand-800 border border-brand-200 hover:bg-brand-100 transition-all">Casual</button>
+                <button onclick="filterCategory('Elegante')" class="cat-btn px-5 py-2 rounded-full text-sm font-medium bg-white text-brand-800 border border-brand-200 hover:bg-brand-100 transition-all">Elegante</button>
+            </div>
+            <div class="flex items-center space-x-2 text-sm text-brand-600">
+                <span class="font-medium">Filtrar Talla:</span>
+                <select id="size-filter" onchange="filterProducts()" class="bg-white border border-brand-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+                    <option value="todos">Todas</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    <option value="38">38</option>
+                    <option value="39">39</option>
+                </select>
+            </div>
+        </div>
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+    </main>
+
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/40 z-50 hidden backdrop-blur-sm transition-opacity"></div>
+    <div id="cart-drawer" class="fixed right-0 top-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col" aria-hidden="true">
+        <div class="p-6 border-b border-brand-100 flex items-center justify-between bg-brand-50">
+            <h2 class="font-serif text-xl font-bold text-brand-800 flex items-center space-x-2">
+                <i class="fa-solid fa-bag-shopping text-brand-500"></i>
+                <span>Tu Carrito de Compras</span>
+            </h2>
+            <button onclick="toggleCart()" class="text-brand-500 hover:text-brand-800 p-2" aria-label="Cerrar carrito"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
+        <div class="p-6 border-t border-brand-100 bg-brand-50">
+            <div class="flex justify-between items-center mb-4 text-lg font-bold text-brand-800">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
+                <i class="fa-brands fa-whatsapp text-xl"></i>
+                <span>Finalizar Pedido por WhatsApp</span>
+            </button>
+        </div>
+    </div>
+
+    <footer class="bg-brand-800 text-brand-100 py-10 mt-20 text-center border-t border-brand-200">
+        <div class="max-w-7xl mx-auto px-4">
+            <h3 class="font-serif text-2xl font-bold text-white mb-2">M / R</h3>
+            <p class="text-sm text-brand-300 mb-6">Elegancia y confort en cada paso.</p>
+            <p class="text-xs text-brand-400">&copy; 2026 M/R Sandalias. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="js/app.js"></script>
+</body>
+</html>
