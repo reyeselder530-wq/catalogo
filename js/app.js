@@ -114,9 +114,9 @@ function renderProducts(filteredProducts = products) {
         return;
     }
 
-    grid.innerHTML = filteredProducts.map((product) => `
+    grid.innerHTML = filteredProducts.map((product, index) => `
         <article class="product-card overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-sm">
-            <div class="product-image-wrap">
+            <div class="product-image-wrap product-scene-${(index % 4) + 1}">
                 <img
                     class="product-image"
                     src="${product.image}"

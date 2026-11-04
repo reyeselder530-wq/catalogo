@@ -350,13 +350,54 @@ input:focus-visible {
     position: relative;
     overflow: hidden;
     aspect-ratio: 4 / 3;
-    background: #fce8f1;
+    background-color: #efc9ad;
+    background-image:
+        radial-gradient(ellipse at 18% 18%, rgb(255 255 255 / 45%), transparent 42%),
+        linear-gradient(135deg, #eab28c, #c78567);
+}
+
+.product-image-wrap::before {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(45deg, rgb(255 255 255 / 8%) 25%, transparent 25%, transparent 75%, rgb(255 255 255 / 8%) 75%),
+        linear-gradient(45deg, rgb(255 255 255 / 8%) 25%, transparent 25%, transparent 75%, rgb(255 255 255 / 8%) 75%);
+    background-position: 0 0, 10px 10px;
+    background-size: 20px 20px;
+    content: "";
+    opacity: 0.24;
+    pointer-events: none;
+}
+
+.product-scene-2 {
+    background-color: #c9a98d;
+    background-image:
+        radial-gradient(ellipse at 78% 20%, rgb(255 255 255 / 50%), transparent 38%),
+        linear-gradient(145deg, #d9bea4, #ad8c73);
+}
+
+.product-scene-3 {
+    background-color: #d7a2a3;
+    background-image:
+        radial-gradient(ellipse at 20% 75%, rgb(255 255 255 / 48%), transparent 40%),
+        linear-gradient(135deg, #edc3c0, #bd888f);
+}
+
+.product-scene-4 {
+    background-color: #b6aa91;
+    background-image:
+        radial-gradient(ellipse at 76% 18%, rgb(255 255 255 / 46%), transparent 40%),
+        linear-gradient(145deg, #d1c5a9, #96896f);
 }
 
 .product-image {
+    position: relative;
+    z-index: 1;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    padding: 0.5rem;
+    object-fit: contain;
+    mix-blend-mode: multiply;
     transition: transform 300ms ease;
 }
 
@@ -365,6 +406,7 @@ input:focus-visible {
 }
 
 .product-category {
+    z-index: 2;
     position: absolute;
     left: 12px;
     bottom: 12px;
