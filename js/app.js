@@ -362,6 +362,14 @@ document.body.classList.toggle(
     !["catalogo", "nosotros", "contacto"].includes(window.location.hash.slice(1))
 );
 
+const siteHeader = document.querySelector(".site-header");
+const compactHeaderOnScroll = () => {
+    siteHeader.classList.toggle("is-compact", window.scrollY > 40);
+};
+
+window.addEventListener("scroll", compactHeaderOnScroll, { passive: true });
+compactHeaderOnScroll();
+
 renderProducts();
 renderCart();
 document.querySelectorAll(".cat-btn").forEach((button) => button.setAttribute("aria-pressed", "false"));

@@ -7,6 +7,35 @@ body {
     overflow-x: clip;
 }
 
+.site-header {
+    position: sticky;
+    top: 0;
+}
+
+.header-main {
+    transition: height 180ms ease;
+}
+
+.site-header.is-compact .header-main {
+    height: 3.25rem;
+}
+
+.site-header.is-compact nav,
+.site-header.is-compact .header-search,
+.site-header.is-compact .brand-crown,
+.site-header.is-compact .brand-subtitle {
+    display: none;
+}
+
+.site-header.is-compact .payment-widget {
+    min-height: 2.75rem;
+    padding-block: 0.2rem;
+}
+
+.site-header.is-compact .bank-logo-frame {
+    height: 1.8rem;
+}
+
 button,
 select {
     font: inherit;
@@ -549,6 +578,35 @@ input:focus-visible {
             min-height: 2.8rem;
             gap: 0.65rem;
             padding: 0.3rem 0.65rem;
+        }
+
+        .site-header.is-compact .header-main {
+            height: 3rem;
+            gap: 0.3rem;
+            padding-inline: 0.65rem;
+        }
+
+        .site-header.is-compact .brand-mark > .font-serif {
+            font-size: 1.3rem;
+        }
+
+        .site-header.is-compact .payment-widget {
+            min-height: 2.5rem;
+            gap: 0.3rem;
+            padding: 0 0.2rem;
+        }
+
+        .site-header.is-compact .payment-widget h2 {
+            font-size: 0.6rem;
+        }
+
+        .site-header.is-compact .bank-logos {
+            width: min(7.5rem, 32vw);
+            gap: 0.1rem;
+        }
+
+        .site-header.is-compact .bank-logo-frame {
+            height: 1.5rem;
         }
 
         .payment-widget h2 {
