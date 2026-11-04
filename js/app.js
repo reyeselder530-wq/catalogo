@@ -34,6 +34,24 @@ const products = [
         sizes: [35, 36, 37, 38, 39],
         description: "Sandalia café con moño decorativo y plantilla floral.",
         image: "images/sandalia-mono-cafe.png"
+    },
+    {
+        id: "trenzada-morada",
+        name: "Trenzada Morada",
+        category: "Casual",
+        price: 180,
+        sizes: [35, 36, 37, 38, 39],
+        description: "Sandalia casual con banda trenzada color morado.",
+        image: "images/sandalia-trenzada-morada.png"
+    },
+    {
+        id: "azul-flecos",
+        name: "Azul con Flecos",
+        category: "Casual",
+        price: 180,
+        sizes: [35, 36, 37, 38, 39],
+        description: "Sandalia azul con flecos y detalles decorativos.",
+        image: "images/sandalia-azul-flecos.png"
     }
 ];
 
