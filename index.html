@@ -13,11 +13,15 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#fcf8f6',
-                            100: '#f5ebe6',
-                            500: '#b87d64',
-                            600: '#9e6750',
-                            800: '#5c3a2b',
+                            50: '#fff7fb',
+                            100: '#fce8f1',
+                            200: '#f4cfe0',
+                            300: '#dfa9c1',
+                            400: '#cf7ea4',
+                            500: '#e64b93',
+                            600: '#cc337b',
+                            700: '#813758',
+                            800: '#35172d',
                         }
                     },
                     fontFamily: {
@@ -32,44 +36,62 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-brand-50 font-sans text-brand-800 antialiased">
-    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-brand-100 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <span class="font-serif text-3xl font-bold tracking-wider text-brand-800">M / R</span>
-                <span class="hidden sm:inline-block text-xs uppercase tracking-widest text-brand-500 font-semibold border-l pl-3 border-brand-200">Sandalias Exclusivas</span>
-            </div>
-            <div class="flex items-center space-x-4">
-                <button onclick="toggleCart()" class="relative bg-brand-100 text-brand-800 hover:bg-brand-500 hover:text-white px-4 py-2.5 rounded-full transition-all flex items-center space-x-2 shadow-sm">
-                    <i class="fa-solid fa-bag-shopping"></i>
-                    <span class="font-semibold text-sm hidden sm:inline">Carrito</span>
-                    <span id="cart-counter" class="bg-brand-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+    <div class="shipping-banner">
+        <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+        Envíos a todo el país <i class="fa-solid fa-heart" aria-hidden="true"></i>
+    </div>
+    <header class="sticky top-0 z-40 border-b border-brand-100 bg-white/95 shadow-sm backdrop-blur-md">
+        <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+            <a href="#" class="brand-mark" aria-label="M/R Sandalias, inicio">
+                <span class="brand-crown" aria-hidden="true">♕</span>
+                <span class="font-serif text-3xl font-bold tracking-wide">M/R</span>
+                <span class="brand-subtitle">Sandalias</span>
+            </a>
+            <nav class="hidden items-center gap-7 text-sm font-medium md:flex" aria-label="Navegación principal">
+                <a class="nav-link nav-link-active" href="#">Inicio</a>
+                <a class="nav-link" href="#catalogo">Catálogo</a>
+                <a class="nav-link" href="#nosotros">Nosotros</a>
+                <a class="nav-link" href="#contacto">Contacto</a>
+            </nav>
+            <div class="flex items-center gap-3">
+                <label class="header-search flex items-center gap-2 rounded-full border border-brand-200 px-3 py-2">
+                    <i class="fa-solid fa-magnifying-glass text-brand-700" aria-hidden="true"></i>
+                    <input type="search" id="search-input" oninput="filterProducts()" placeholder="Buscar modelos..." aria-label="Buscar modelos">
+                </label>
+                <button type="button" onclick="toggleCart()" class="relative flex items-center gap-2 rounded-full px-3 py-2.5 text-brand-800 transition-colors hover:bg-brand-100" aria-label="Abrir carrito">
+                    <i class="fa-solid fa-cart-shopping text-lg" aria-hidden="true"></i>
+                    <span id="cart-counter" class="cart-counter">0</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <section class="relative bg-brand-100/60 py-16 px-4 sm:px-6 text-center border-b border-brand-100">
-        <div class="max-w-3xl mx-auto">
-            <h1 class="font-serif text-4xl sm:text-5xl font-bold text-brand-800 mb-4">Paso firme con estilo y elegancia</h1>
-            <p class="text-brand-600 text-lg mb-8">Descubre nuestra colección de sandalias diseñadas para cada momento de tu día.</p>
-            <p class="text-sm font-semibold text-brand-600 mb-6">Tienda en línea. Realizamos envíos con costo adicional.</p>
-            <div class="relative max-w-md mx-auto">
-                <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-brand-500"></i>
-                <input type="text" id="search-input" oninput="filterProducts()" placeholder="Buscar modelo o estilo..." class="w-full pl-12 pr-4 py-3 bg-white border border-brand-200 rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-sm">
+    <section class="hero-section">
+        <div class="hero-inner">
+            <div class="hero-copy">
+                <span class="hero-eyebrow"><i class="fa-solid fa-sparkles" aria-hidden="true"></i> Nueva colección</span>
+                <h1>Paso firme<br>con estilo y <em>elegancia</em></h1>
+                <p>Encuentra ese par especial para acompañarte en cada momento.</p>
+                <a href="#catalogo" class="hero-cta">Explora nuestro catálogo <i class="fa-solid fa-chevron-right" aria-hidden="true"></i></a>
+                <p class="hero-shipping">Tienda en línea · Envíos con costo adicional</p>
+            </div>
+            <div class="hero-image-wrap" aria-hidden="true">
+                <img src="images/sandalia-floral.png" alt="">
+                <span class="hero-heart">♡</span>
             </div>
         </div>
     </section>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-10 pb-6 border-b border-brand-200 gap-4">
-            <div id="category-filters" class="flex flex-wrap gap-2 justify-center md:justify-start">
-                <button onclick="filterCategory('todos')" class="cat-btn px-5 py-2 rounded-full text-sm font-medium bg-brand-800 text-white transition-all shadow-sm">Todos</button>
-                <button onclick="filterCategory('Casual')" class="cat-btn px-5 py-2 rounded-full text-sm font-medium bg-white text-brand-800 border border-brand-200 hover:bg-brand-100 transition-all">Casual</button>
-                <button onclick="filterCategory('Elegante')" class="cat-btn px-5 py-2 rounded-full text-sm font-medium bg-white text-brand-800 border border-brand-200 hover:bg-brand-100 transition-all">Elegante</button>
+    <main id="catalogo" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <div class="catalog-toolbar">
+            <div id="category-filters" class="flex flex-wrap justify-center gap-2 md:justify-start">
+                <button onclick="filterCategory('todos')" class="cat-btn cat-btn-active" aria-pressed="true">Todos</button>
+                <button onclick="filterCategory('Casual')" class="cat-btn" aria-pressed="false"><i class="fa-solid fa-shoe-prints" aria-hidden="true"></i> Casual</button>
+                <button onclick="filterCategory('Elegante')" class="cat-btn" aria-pressed="false"><i class="fa-regular fa-gem" aria-hidden="true"></i> Elegante</button>
             </div>
-            <div class="flex items-center space-x-2 text-sm text-brand-600">
-                <span class="font-medium">Filtrar Talla:</span>
-                <select id="size-filter" onchange="filterProducts()" class="bg-white border border-brand-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-500">
+            <label class="size-filter" for="size-filter">
+                <span>Talla:</span>
+                <select id="size-filter" onchange="filterProducts()">
                     <option value="todos">Todas</option>
                     <option value="35">35</option>
                     <option value="36">36</option>
@@ -77,38 +99,58 @@
                     <option value="38">38</option>
                     <option value="39">39</option>
                 </select>
-            </div>
+            </label>
         </div>
-        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+        <div id="product-grid" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"></div>
     </main>
 
-    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 bg-black/40 z-50 hidden backdrop-blur-sm transition-opacity"></div>
-    <div id="cart-drawer" class="fixed right-0 top-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col" aria-hidden="true">
-        <div class="p-6 border-b border-brand-100 flex items-center justify-between bg-brand-50">
-            <h2 class="font-serif text-xl font-bold text-brand-800 flex items-center space-x-2">
-                <i class="fa-solid fa-bag-shopping text-brand-500"></i>
-                <span>Tu Carrito de Compras</span>
-            </h2>
-            <button onclick="toggleCart()" class="text-brand-500 hover:text-brand-800 p-2" aria-label="Cerrar carrito"><i class="fa-solid fa-xmark text-xl"></i></button>
+    <aside class="payment-widget" aria-label="Métodos de pagos disponibles">
+        <h2>Métodos de pagos</h2>
+        <div class="bank-logos" aria-label="Bancos disponibles">
+            <div class="bank-logo-frame"><img src="images/banpro.png" alt="Banpro Grupo Promerica" loading="lazy"></div>
+            <div class="bank-logo-frame"><img src="images/bac-credomatic.png" alt="BAC Credomatic" loading="lazy"></div>
+            <div class="bank-logo-frame bank-logo-lafise"><img src="images/lafise.png" alt="Banco LAFISE Bancentro" loading="lazy"></div>
         </div>
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4"></div>
-        <div class="p-6 border-t border-brand-100 bg-brand-50">
-            <div class="flex justify-between items-center mb-4 text-lg font-bold text-brand-800">
+    </aside>
+    <a class="floating-whatsapp" href="https://wa.me/50585557483?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20sandalias." target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp">
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <div id="cart-overlay" onclick="toggleCart()" class="fixed inset-0 z-50 hidden bg-black/40 backdrop-blur-sm transition-opacity" aria-hidden="true"></div>
+    <div id="cart-drawer" class="fixed right-0 top-0 z-50 flex h-full w-full max-w-md translate-x-full transform flex-col bg-white shadow-2xl transition-transform duration-300" aria-hidden="true">
+        <div class="flex items-center justify-between border-b border-brand-100 bg-brand-50 p-6">
+            <h2 class="flex items-center space-x-2 font-serif text-xl font-bold text-brand-800">
+                <i class="fa-solid fa-bag-shopping text-brand-500" aria-hidden="true"></i>
+                <span>Tu carrito de compras</span>
+            </h2>
+            <button type="button" onclick="toggleCart()" class="p-2 text-brand-500 hover:text-brand-800" aria-label="Cerrar carrito"><i class="fa-solid fa-xmark text-xl"></i></button>
+        </div>
+        <div id="cart-items" class="flex-1 space-y-4 overflow-y-auto p-6"></div>
+        <div class="border-t border-brand-100 bg-brand-50 p-6">
+            <div class="mb-4 flex items-center justify-between text-lg font-bold text-brand-800">
                 <span>Total:</span>
-                <span id="cart-total">$0.00</span>
+                <span id="cart-total">C$0.00</span>
             </div>
-            <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3.5 px-4 rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
-                <i class="fa-brands fa-whatsapp text-xl"></i>
-                <span>Finalizar Pedido por WhatsApp</span>
+            <button type="button" onclick="checkoutWhatsApp()" class="flex w-full items-center justify-center space-x-2 rounded-xl bg-emerald-600 px-4 py-3.5 font-semibold text-white shadow-md transition-colors hover:bg-emerald-700">
+                <i class="fa-brands fa-whatsapp text-xl" aria-hidden="true"></i>
+                <span>Finalizar pedido por WhatsApp</span>
             </button>
         </div>
     </div>
 
-    <footer class="bg-brand-800 text-brand-100 py-10 mt-20 text-center border-t border-brand-200">
-        <div class="max-w-7xl mx-auto px-4">
-            <h3 class="font-serif text-2xl font-bold text-white mb-2">M / R</h3>
-            <p class="text-sm text-brand-300 mb-6">Elegancia y confort en cada paso.</p>
-            <p class="text-xs text-brand-400">&copy; 2026 M/R Sandalias. Todos los derechos reservados. Hecho por el Ing. Elder Reyes.</p>
+    <footer id="nosotros" class="store-footer">
+        <div class="footer-benefits">
+            <div><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>Compra segura</span></div>
+            <div><i class="fa-solid fa-truck-fast" aria-hidden="true"></i><span>Envíos confiables</span></div>
+            <div><i class="fa-regular fa-heart" aria-hidden="true"></i><span>Atención personalizada</span></div>
+            <div id="contacto"><strong>Síguenos:</strong><a href="https://wa.me/50585557483" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></div>
+        </div>
+        <div class="footer-bottom">
+            <a href="#" class="brand-mark" aria-label="M/R Sandalias, inicio">
+                <span class="font-serif text-2xl font-bold">M/R</span><span class="brand-subtitle">Sandalias</span>
+            </a>
+            <p>&copy; 2026 M/R Sandalias. Todos los derechos reservados. Hecho por el ING Elder Reyes.</p>
+            <span class="footer-thanks">Gracias por tu preferencia ♡</span>
         </div>
     </footer>
     <script src="js/app.js"></script>

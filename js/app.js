@@ -41,7 +41,8 @@ const CART_STORAGE_KEY = "mr-sandalias-cart";
 const WHATSAPP_PHONE = "+505 85557483";
 const currencyFormatter = new Intl.NumberFormat("es-NI", {
     style: "currency",
-    currency: "NIO"
+    currency: "NIO",
+    currencyDisplay: "narrowSymbol"
 });
 
 let activeCategory = "todos";
@@ -152,10 +153,7 @@ function filterCategory(category) {
     activeCategory = category;
     document.querySelectorAll(".cat-btn").forEach((button) => {
         const isSelected = button.getAttribute("onclick") === `filterCategory('${category}')`;
-        button.classList.toggle("bg-brand-800", isSelected);
-        button.classList.toggle("text-white", isSelected);
-        button.classList.toggle("bg-white", !isSelected);
-        button.classList.toggle("text-brand-800", !isSelected);
+        button.classList.toggle("cat-btn-active", isSelected);
         button.setAttribute("aria-pressed", String(isSelected));
     });
     filterProducts();
