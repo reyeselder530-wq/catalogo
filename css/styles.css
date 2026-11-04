@@ -52,6 +52,26 @@ input:focus-visible {
     letter-spacing: 0.02em;
 }
 
+.landing-view header nav,
+.landing-view .header-search,
+.landing-view #cart-open,
+.landing-view #catalogo,
+.landing-view .payment-widget,
+.landing-view .floating-whatsapp,
+.landing-view .store-footer {
+    display: none;
+}
+
+.landing-view .hero-section {
+    display: flex;
+    min-height: calc(100svh - 108px);
+}
+
+.landing-view .hero-inner {
+    flex: 1;
+    min-height: 100%;
+}
+
 .brand-mark {
     display: inline-flex;
     min-width: max-content;
@@ -367,7 +387,7 @@ input:focus-visible {
     position: fixed;
     z-index: 45;
     right: 1.25rem;
-    bottom: 5.7rem;
+    top: 7rem;
     width: min(17rem, calc(100vw - 2rem));
     border: 1px solid #f4cfe0;
     border-radius: 0.8rem;
@@ -539,6 +559,14 @@ input:focus-visible {
             min-height: 420px;
             align-items: flex-start;
             padding: 2.25rem 1.25rem;
+        }
+
+        .landing-view .hero-section {
+            min-height: calc(100svh - 108px);
+        }
+
+        .landing-view .hero-inner {
+            min-height: 100%;
         }
 
         .hero-copy {

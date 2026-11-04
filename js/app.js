@@ -330,6 +330,38 @@ window.changeQuantity = changeQuantity;
 window.removeFromCart = removeFromCart;
 window.checkoutWhatsApp = checkoutWhatsApp;
 
+function showCatalog() {
+    document.body.classList.remove("landing-view");
+}
+
+document.querySelectorAll('a[href^="#"]').forEach((link) => {
+    link.addEventListener("click", (event) => {
+        const targetId = link.getAttribute("href").slice(1);
+        if (targetId === "inicio") {
+            document.body.classList.add("landing-view");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+            return;
+        }
+
+        if (["catalogo", "nosotros", "contacto"].includes(targetId)) {
+            showCatalog();
+        }
+    });
+});
+
+window.addEventListener("hashchange", () => {
+    const targetId = window.location.hash.slice(1);
+    document.body.classList.toggle(
+        "landing-view",
+        !["catalogo", "nosotros", "contacto"].includes(targetId)
+    );
+});
+
+document.body.classList.toggle(
+    "landing-view",
+    !["catalogo", "nosotros", "contacto"].includes(window.location.hash.slice(1))
+);
+
 renderProducts();
 renderCart();
 document.querySelectorAll(".cat-btn").forEach((button) => button.setAttribute("aria-pressed", "false"));

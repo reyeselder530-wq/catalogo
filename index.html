@@ -33,22 +33,22 @@
         }
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css?v=20261103">
 </head>
-<body class="bg-brand-50 font-sans text-brand-800 antialiased">
+<body class="landing-view bg-brand-50 font-sans text-brand-800 antialiased">
     <div class="shipping-banner">
         <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
         Envíos a todo el país <i class="fa-solid fa-heart" aria-hidden="true"></i>
     </div>
     <header class="sticky top-0 z-40 border-b border-brand-100 bg-white/95 shadow-sm backdrop-blur-md">
         <div class="mx-auto flex h-20 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-            <a href="#" class="brand-mark" aria-label="M/R Sandalias, inicio">
+            <a href="#inicio" class="brand-mark" aria-label="M/R Sandalias, inicio">
                 <span class="brand-crown" aria-hidden="true">♕</span>
                 <span class="font-serif text-3xl font-bold tracking-wide">M/R</span>
                 <span class="brand-subtitle">Sandalias</span>
             </a>
             <nav class="hidden items-center gap-7 text-sm font-medium md:flex" aria-label="Navegación principal">
-                <a class="nav-link nav-link-active" href="#">Inicio</a>
+                <a class="nav-link nav-link-active" href="#inicio">Inicio</a>
                 <a class="nav-link" href="#catalogo">Catálogo</a>
                 <a class="nav-link" href="#nosotros">Nosotros</a>
                 <a class="nav-link" href="#contacto">Contacto</a>
@@ -58,7 +58,7 @@
                     <i class="fa-solid fa-magnifying-glass text-brand-700" aria-hidden="true"></i>
                     <input type="search" id="search-input" oninput="filterProducts()" placeholder="Buscar modelos..." aria-label="Buscar modelos">
                 </label>
-                <button type="button" onclick="toggleCart()" class="relative flex items-center gap-2 rounded-full px-3 py-2.5 text-brand-800 transition-colors hover:bg-brand-100" aria-label="Abrir carrito">
+                <button id="cart-open" type="button" onclick="toggleCart()" class="relative flex items-center gap-2 rounded-full px-3 py-2.5 text-brand-800 transition-colors hover:bg-brand-100" aria-label="Abrir carrito">
                     <i class="fa-solid fa-cart-shopping text-lg" aria-hidden="true"></i>
                     <span id="cart-counter" class="cart-counter">0</span>
                 </button>
@@ -66,7 +66,7 @@
         </div>
     </header>
 
-    <section class="hero-section">
+    <section id="inicio" class="hero-section">
         <div class="hero-inner">
             <div class="hero-copy">
                 <span class="hero-eyebrow"><i class="fa-solid fa-sparkles" aria-hidden="true"></i> Nueva colección</span>
@@ -146,7 +146,7 @@
             <div id="contacto"><strong>Síguenos:</strong><a href="https://wa.me/50585557483" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></div>
         </div>
         <div class="footer-bottom">
-            <a href="#" class="brand-mark" aria-label="M/R Sandalias, inicio">
+            <a href="#inicio" class="brand-mark" aria-label="M/R Sandalias, inicio">
                 <span class="font-serif text-2xl font-bold">M/R</span><span class="brand-subtitle">Sandalias</span>
             </a>
             <p>&copy; 2026 M/R Sandalias. Todos los derechos reservados. Hecho por el ING Elder Reyes.</p>
