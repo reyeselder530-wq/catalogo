@@ -1,0 +1,58 @@
+{
+  "products": [
+    {
+      "id": "floral",
+      "name": "Floral",
+      "category": "Elegante",
+      "price": 300,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia blanca con delicado detalle floral.",
+      "image": "assets/images/elegantes/sandalia-floral.png"
+    },
+    {
+      "id": "negra",
+      "name": "Clásica Negra",
+      "category": "Casual",
+      "price": 300,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia negra con banda fruncida y estilo moderno.",
+      "image": "assets/images/casuales/sandalia-negra.png"
+    },
+    {
+      "id": "sandalias-casuales",
+      "name": "Sandalias casuales",
+      "category": "Casual",
+      "price": 280,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalias azules casuales, cómodas y elegantes.",
+      "image": "assets/images/casuales/sandalias-casuales.png"
+    },
+    {
+      "id": "mono-cafe",
+      "name": "Moño Café",
+      "category": "Elegante",
+      "price": 200,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia café con moño decorativo y plantilla floral.",
+      "image": "assets/images/elegantes/sandalia-mono-cafe.png"
+    },
+    {
+      "id": "trenzada-morada",
+      "name": "Trenzada Morada",
+      "category": "Casual",
+      "price": 180,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia casual con banda trenzada color morado.",
+      "image": "assets/images/casuales/sandalia-trenzada-morada.png"
+    },
+    {
+      "id": "azul-flecos",
+      "name": "Azul con Flecos",
+      "category": "Casual",
+      "price": 180,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia azul con flecos y detalles decorativos.",
+      "image": "assets/images/casuales/sandalia-azul-flecos.png"
+    }
+  ]
+}

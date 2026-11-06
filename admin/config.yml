@@ -1,0 +1,55 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+collections:
+  - name: "catalogo"
+    label: "Catálogo"
+    format: "json"
+    files:
+      - name: "sandalias"
+        label: "Sandalias"
+        file: "data/products.json"
+        fields:
+          - label: "Productos"
+            name: "products"
+            widget: "list"
+            summary: "{{fields.name}} — C$ {{fields.price}}"
+            fields:
+              - label: "ID (único, sin espacios)"
+                name: "id"
+                widget: "string"
+                pattern: ["^[a-z0-9-]+$", "Usa solo letras minúsculas, números y guiones."]
+                hint: "Ejemplo: sandalia-nueva. No lo cambies al editar un producto existente."
+              - label: "Nombre"
+                name: "name"
+                widget: "string"
+              - label: "Categoría"
+                name: "category"
+                widget: "select"
+                options: ["Casual", "Elegante"]
+              - label: "Precio (C$)"
+                name: "price"
+                widget: "number"
+                value_type: "int"
+                min: 0
+              - label: "Tallas disponibles"
+                name: "sizes"
+                widget: "list"
+                field:
+                  label: "Talla"
+                  name: "size"
+                  widget: "number"
+                  value_type: "int"
+                  min: 1
+                  max: 50
+                hint: "Agrega solo las tallas que tienes disponibles."
+              - label: "Descripción"
+                name: "description"
+                widget: "text"
+              - label: "Fotografía"
+                name: "image"
+                widget: "image"

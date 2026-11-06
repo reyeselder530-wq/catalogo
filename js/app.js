@@ -1,60 +1,4 @@
-const products = [
-    {
-        id: "floral",
-        name: "Floral",
-        category: "Elegante",
-        price: 300,
-        sizes: [35, 36, 37, 38, 39],
-        description: "Sandalia blanca con delicado detalle floral.",
-        image: "images/sandalia-floral.png"
-    },
-    {
-        id: "negra",
-        name: "Clásica Negra",
-        category: "Casual",
-        price: 300,
-        sizes: [35, 36, 37, 38, 39],
-        description: "Sandalia negra con banda fruncida y estilo moderno.",
-        image: "images/sandalia-negra.png"
-    },
-    {
-        id: "sandalias-casuales",
-        name: "Sandalias casuales",
-        category: "Casual",
-        price: 280,
-        sizes: [35, 36, 37, 38, 39],
-        description: "Sandalias azules casuales, cómodas y elegantes.",
-        image: "images/sandalias-casuales.png"
-    },
-    {
-        id: "mono-cafe",
-        name: "Moño Café",
-        category: "Elegante",
-        price: 200,
-        sizes: [35, 36, 37, 38, 39],
-        description: "Sandalia café con moño decorativo y plantilla floral.",
-        image: "images/sandalia-mono-cafe.png"
-    },
-    {
-        id: "trenzada-morada",
-        name: "Trenzada Morada",
-        category: "Casual",
-        price: 180,
-        sizes: [35, 36, 37, 38, 39],
-        description: "Sandalia casual con banda trenzada color morado.",
-        image: "images/sandalia-trenzada-morada.png"
-    },
-    {
-        id: "azul-flecos",
-        name: "Azul con Flecos",
-        category: "Casual",
-        price: 180,
-        sizes: [35, 36, 37, 38, 39],
-        description: "Sandalia azul con flecos y detalles decorativos.",
-        image: "images/sandalia-azul-flecos.png"
-    }
-];
-
+let products = [];
 const CART_STORAGE_KEY = "mr-sandalias-cart";
 const FAVORITES_STORAGE_KEY = "mr-sandalias-favorites";
 const WHATSAPP_PHONE = "+505 85557483";
@@ -65,8 +9,8 @@ const currencyFormatter = new Intl.NumberFormat("es-NI", {
 });
 
 let activeCategory = "todos";
-let cart = loadCart();
-let favoriteIds = loadFavorites();
+let cart = [];
+let favoriteIds = [];
 let toastTimeout;
 
 function loadFavorites() {
@@ -130,6 +74,16 @@ function formatPrice(price) {
     return currencyFormatter.format(price);
 }
 
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+    })[character]);
+}
+
 function renderProducts(filteredProducts = products) {
     const grid = document.getElementById("product-grid");
 
@@ -143,22 +97,27 @@ function renderProducts(filteredProducts = products) {
 
     grid.innerHTML = filteredProducts.map((product, index) => {
         const isFavorite = favoriteIds.includes(product.id);
+        const productId = escapeHtml(product.id);
+        const productName = escapeHtml(product.name);
+        const productCategory = escapeHtml(product.category);
+        const productDescription = escapeHtml(product.description);
+        const productImage = escapeHtml(product.image);
         return `
         <article class="product-card overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-sm" style="--card-index: ${Math.min(index, 6)}">
             <div class="product-image-wrap">
                 <img
                     class="product-image"
-                    src="${product.image}"
-                    alt="Sandalia ${product.name}"
+                    src="${productImage}"
+                    alt="Sandalia ${productName}"
                     loading="lazy"
                 >
-                <span class="product-category">${product.category}</span>
+                <span class="product-category">${productCategory}</span>
                 <button
                     type="button"
                     class="favorite-btn${isFavorite ? " is-favorite" : ""}"
-                    data-product-id="${product.id}"
-                    onclick="toggleFavorite('${product.id}')"
-                    aria-label="${isFavorite ? "Quitar de" : "Agregar a"} favoritos: ${product.name}"
+                    data-product-id="${productId}"
+                    onclick="toggleFavorite('${productId}')"
+                    aria-label="${isFavorite ? "Quitar de" : "Agregar a"} favoritos: ${productName}"
                     aria-pressed="${isFavorite}"
                     title="${isFavorite ? "Quitar de" : "Agregar a"} favoritos"
                 >
@@ -167,21 +126,21 @@ function renderProducts(filteredProducts = products) {
             </div>
             <div class="p-5">
                 <div class="mb-2 flex items-start justify-between gap-3">
-                    <h2 class="font-serif text-xl font-bold text-brand-800">${product.name}</h2>
+                    <h2 class="font-serif text-xl font-bold text-brand-800">${productName}</h2>
                     <span class="whitespace-nowrap font-semibold text-brand-600">${formatPrice(product.price)}</span>
                 </div>
-                <p class="mb-5 min-h-10 text-sm leading-5 text-brand-600">${product.description}</p>
-                <label class="mb-3 block text-sm font-medium text-brand-700" for="size-${product.id}">
+                <p class="mb-5 min-h-10 text-sm leading-5 text-brand-600">${productDescription}</p>
+                <label class="mb-3 block text-sm font-medium text-brand-700" for="size-${productId}">
                     Selecciona tu talla
                 </label>
                 <div class="flex gap-2">
-                    <select id="size-${product.id}" class="product-size min-w-0 flex-1 rounded-lg border border-brand-200 bg-white px-3 py-2 text-sm text-brand-800">
+                    <select id="size-${productId}" class="product-size min-w-0 flex-1 rounded-lg border border-brand-200 bg-white px-3 py-2 text-sm text-brand-800">
                         <option value="">Talla</option>
                         ${product.sizes.map((size) => `<option value="${size}">${size}</option>`).join("")}
                     </select>
                     <button
                         type="button"
-                        onclick="addToCart('${product.id}')"
+                        onclick="addToCart('${productId}')"
                         class="add-to-cart rounded-lg bg-brand-800 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
                     >
                         Agregar
@@ -307,31 +266,34 @@ function renderCart() {
 
     cartItems.innerHTML = cart.map((item) => {
         const product = products.find((entry) => entry.id === item.productId);
+        const productId = escapeHtml(item.productId);
+        const productName = escapeHtml(product.name);
+        const productImage = escapeHtml(product.image);
         return `
             <article class="flex gap-4 border-b border-brand-100 pb-4">
-                <img class="cart-image" src="${product.image}" alt="" loading="lazy">
+                <img class="cart-image" src="${productImage}" alt="" loading="lazy">
                 <div class="min-w-0 flex-1">
                     <div class="flex items-start justify-between gap-2">
                         <div>
-                            <h3 class="font-semibold text-brand-800">${product.name}</h3>
+                            <h3 class="font-semibold text-brand-800">${productName}</h3>
                             <p class="text-sm text-brand-600">Talla ${item.size}</p>
                         </div>
                         <button
                             type="button"
-                            onclick="removeFromCart('${item.productId}', ${item.size})"
+                            onclick="removeFromCart('${productId}', ${item.size})"
                             class="text-brand-400 transition-colors hover:text-red-600"
-                            aria-label="Quitar ${product.name}, talla ${item.size}"
+                            aria-label="Quitar ${productName}, talla ${item.size}"
                         >
                             <i class="fa-regular fa-trash-can"></i>
                         </button>
                     </div>
                     <div class="mt-3 flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <button type="button" onclick="changeQuantity('${item.productId}', ${item.size}, -1)" class="quantity-btn" aria-label="Reducir cantidad">
+                            <button type="button" onclick="changeQuantity('${productId}', ${item.size}, -1)" class="quantity-btn" aria-label="Reducir cantidad">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
                             <span class="min-w-4 text-center text-sm font-semibold">${item.quantity}</span>
-                            <button type="button" onclick="changeQuantity('${item.productId}', ${item.size}, 1)" class="quantity-btn" aria-label="Aumentar cantidad">
+                            <button type="button" onclick="changeQuantity('${productId}', ${item.size}, 1)" class="quantity-btn" aria-label="Aumentar cantidad">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>
@@ -475,14 +437,62 @@ const compactHeaderOnScroll = () => {
 window.addEventListener("scroll", compactHeaderOnScroll, { passive: true });
 compactHeaderOnScroll();
 
-setupStoreSharing();
-renderProducts();
-renderCart();
-document.querySelectorAll(".cat-btn").forEach((button) => button.setAttribute("aria-pressed", "false"));
-document.querySelector(".cat-btn").setAttribute("aria-pressed", "true");
-
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && !document.getElementById("cart-drawer").classList.contains("translate-x-full")) {
         toggleCart();
     }
 });
+
+function isValidProduct(product) {
+    return product
+        && typeof product.id === "string"
+        && /^[a-z0-9-]+$/i.test(product.id)
+        && typeof product.name === "string"
+        && product.name.trim().length > 0
+        && ["Casual", "Elegante"].includes(product.category)
+        && Number.isFinite(product.price)
+        && product.price >= 0
+        && Array.isArray(product.sizes)
+        && product.sizes.every((size) => Number.isInteger(size) && size > 0)
+        && new Set(product.sizes).size === product.sizes.length
+        && typeof product.description === "string"
+        && typeof product.image === "string"
+        && product.image.replace(/^\//, "").startsWith("assets/images/")
+        && !product.image.split("/").includes("..");
+}
+
+async function initializeStore() {
+    try {
+        const response = await fetch("data/products.json", { cache: "no-cache" });
+        if (!response.ok) {
+            throw new Error(`No se pudo cargar el catálogo (${response.status}).`);
+        }
+
+        const catalog = await response.json();
+        if (!Array.isArray(catalog.products)
+            || !catalog.products.every(isValidProduct)
+            || new Set(catalog.products.map((product) => product.id)).size !== catalog.products.length) {
+            throw new Error("El archivo del catálogo tiene datos incompletos o inválidos.");
+        }
+
+        products = catalog.products;
+        cart = loadCart();
+        favoriteIds = loadFavorites();
+        setupStoreSharing();
+        renderProducts();
+        renderCart();
+        document.querySelectorAll(".cat-btn").forEach((button) => {
+            const isSelected = button.getAttribute("onclick") === "filterCategory('todos')";
+            button.classList.toggle("cat-btn-active", isSelected);
+            button.setAttribute("aria-pressed", String(isSelected));
+        });
+    } catch (error) {
+        console.error("No se pudo iniciar el catálogo de M/R.", error);
+        document.getElementById("product-grid").innerHTML = `
+            <p class="col-span-full py-12 text-center text-brand-600" role="alert">
+                No pudimos cargar el catálogo en este momento. Intenta recargar la página.
+            </p>`;
+    }
+}
+
+initializeStore();
