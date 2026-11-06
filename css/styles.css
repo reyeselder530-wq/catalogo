@@ -10,6 +10,7 @@ body {
 .site-header {
     position: sticky;
     top: 0;
+    animation: header-enter 650ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
 .header-main {
@@ -109,6 +110,7 @@ input:focus-visible {
     color: #35172d;
     line-height: 0.9;
     text-decoration: none;
+    animation: brand-enter 700ms 100ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
 .brand-crown {
@@ -189,6 +191,7 @@ input:focus-visible {
     position: relative;
     z-index: 1;
     max-width: 590px;
+    animation: content-enter 700ms 160ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
 .hero-eyebrow {
@@ -257,6 +260,7 @@ input:focus-visible {
     height: 100%;
     align-items: center;
     justify-content: center;
+    animation: image-enter 850ms 220ms cubic-bezier(0.2, 0.7, 0.3, 1) both;
 }
 
 .hero-image-wrap::before {
@@ -309,7 +313,7 @@ input:focus-visible {
     color: #35172d;
     font-size: 0.82rem;
     font-weight: 600;
-    transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+    transition: background-color 220ms ease, color 220ms ease, border-color 220ms ease, transform 150ms ease;
 }
 
 .cat-btn:hover,
@@ -338,6 +342,7 @@ input:focus-visible {
 }
 
 .product-card {
+    animation: card-enter 380ms calc(var(--card-index, 0) * 45ms) cubic-bezier(0.2, 0.7, 0.3, 1) both;
     transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
@@ -351,6 +356,35 @@ input:focus-visible {
     overflow: hidden;
     aspect-ratio: 4 / 3;
     background: #fce8f1;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(255 255 255 / 75%);
+    border-radius: 50%;
+    background: rgb(255 255 255 / 92%);
+    color: #813758;
+    cursor: pointer;
+    font-size: 1.05rem;
+    box-shadow: 0 3px 12px rgb(53 23 45 / 12%);
+    transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.favorite-btn:hover,
+.favorite-btn.is-favorite {
+    background: #fff;
+    color: #d93885;
+}
+
+.favorite-btn.is-animating i {
+    animation: heart-pop 420ms cubic-bezier(0.2, 0.8, 0.3, 1.3);
 }
 
 .product-image {
@@ -384,6 +418,14 @@ input:focus-visible {
 
 .add-to-cart {
     min-height: 42px;
+}
+
+.offer-badge {
+    position: relative;
+    overflow: hidden;
+    background-image: linear-gradient(110deg, transparent 35%, rgb(255 255 255 / 55%) 48%, transparent 62%);
+    background-size: 250% 100%;
+    animation: offer-shine 3.8s 1s ease-in-out infinite;
 }
 
 .cart-image {
@@ -646,6 +688,117 @@ input:focus-visible {
     transform: translateY(0);
 }
 
+#cart-drawer {
+    transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#cart-overlay.is-visible {
+    animation: overlay-enter 240ms ease both;
+}
+
+button:active,
+.hero-cta:active,
+.floating-whatsapp:active,
+.share-menu summary:active {
+    transform: scale(0.97);
+}
+
+@keyframes header-enter {
+    from {
+        opacity: 0;
+        translate: 0 -10px;
+    }
+
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@keyframes brand-enter {
+    from {
+        opacity: 0;
+        scale: 0.96;
+    }
+
+    to {
+        opacity: 1;
+        scale: 1;
+    }
+}
+
+@keyframes content-enter {
+    from {
+        opacity: 0;
+        translate: 0 12px;
+    }
+
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@keyframes image-enter {
+    from {
+        opacity: 0;
+        translate: 14px 0;
+    }
+
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@keyframes card-enter {
+    from {
+        opacity: 0;
+        translate: 0 10px;
+    }
+
+    to {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+@keyframes heart-pop {
+    0% {
+        scale: 1;
+    }
+
+    45% {
+        scale: 1.45;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
+
+@keyframes offer-shine {
+    0%,
+    60%,
+    100% {
+        background-position: 150% 0;
+    }
+
+    82% {
+        background-position: -50% 0;
+    }
+}
+
+@keyframes overlay-enter {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     html {
         scroll-behavior: auto;
@@ -655,6 +808,8 @@ input:focus-visible {
     *::before,
     *::after {
         transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
     }
 }
 
