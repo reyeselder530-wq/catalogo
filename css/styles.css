@@ -523,6 +523,84 @@ input:focus-visible {
     font-size: 1.25rem;
 }
 
+.share-menu {
+    position: relative;
+    display: inline-block;
+    margin-left: 0.4rem;
+    vertical-align: middle;
+}
+
+.share-menu summary {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid #d93885;
+    border-radius: 999px;
+    padding: 0.65rem 1rem;
+    color: #813758;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+    list-style: none;
+    transition: background-color 150ms ease, color 150ms ease;
+}
+
+.share-menu summary:hover {
+    background: #fff7fb;
+    color: #a52c67;
+}
+
+.share-menu summary::-webkit-details-marker {
+    display: none;
+}
+
+.share-menu summary i {
+    color: #a52c67;
+}
+
+.share-options {
+    position: absolute;
+    left: 0;
+    bottom: calc(100% + 0.5rem);
+    z-index: 10;
+    display: grid;
+    min-width: 10rem;
+    gap: 0.25rem;
+    border: 1px solid #f4cfe0;
+    border-radius: 0.75rem;
+    background: #fff;
+    padding: 0.45rem;
+    box-shadow: 0 8px 24px rgb(53 23 45 / 16%);
+}
+
+.share-options a,
+.share-options button {
+    display: flex;
+    min-height: 2.5rem;
+    align-items: center;
+    gap: 0.6rem;
+    border: 0;
+    border-radius: 0.45rem;
+    background: transparent;
+    padding: 0.5rem 0.65rem;
+    color: #35172d;
+    cursor: pointer;
+    font-size: 0.8rem;
+    text-align: left;
+    text-decoration: none;
+}
+
+.share-options a:hover,
+.share-options button:hover {
+    background: #fff7fb;
+    color: #35172d;
+}
+
+.share-options i {
+    color: #a52c67;
+}
+
 .footer-bottom {
     display: flex;
     min-height: 4rem;
@@ -573,140 +651,140 @@ input:focus-visible {
         scroll-behavior: auto;
     }
 
-    @media (max-width: 640px) {
-        .payment-widget {
-            min-height: 2.8rem;
-            gap: 0.65rem;
-            padding: 0.3rem 0.65rem;
-        }
-
-        .site-header.is-compact .header-main {
-            height: 3rem;
-            gap: 0.3rem;
-            padding-inline: 0.65rem;
-        }
-
-        .site-header.is-compact .brand-mark > .font-serif {
-            font-size: 1.3rem;
-        }
-
-        .site-header.is-compact .payment-widget {
-            min-height: 2.5rem;
-            gap: 0.3rem;
-            padding: 0 0.2rem;
-        }
-
-        .site-header.is-compact .payment-widget h2 {
-            font-size: 0.6rem;
-        }
-
-        .site-header.is-compact .bank-logos {
-            width: min(7.5rem, 32vw);
-            gap: 0.1rem;
-        }
-
-        .site-header.is-compact .bank-logo-frame {
-            height: 1.5rem;
-        }
-
-        .payment-widget h2 {
-            font-size: 0.72rem;
-        }
-
-        .bank-logos {
-            width: min(12rem, 58vw);
-            gap: 0.2rem;
-        }
-
-        .bank-logo-frame {
-            height: 1.8rem;
-        }
-
-        .header-search {
-            gap: 0.3rem;
-            padding: 0.35rem 0.5rem;
-        }
-
-        .header-search input {
-            width: 5rem;
-        }
-
-        .hero-inner {
-            min-height: 420px;
-            align-items: flex-start;
-            padding: 2.25rem 1.25rem;
-        }
-
-        .landing-view .hero-section {
-            min-height: calc(100svh - 108px);
-        }
-
-        .landing-view .hero-inner {
-            min-height: 100%;
-        }
-
-        .hero-copy {
-            max-width: 100%;
-        }
-
-        .hero-copy h1 {
-            font-size: clamp(2.5rem, 12vw, 3.6rem);
-        }
-
-        .hero-image-wrap {
-            top: auto;
-            right: -8%;
-            bottom: -0.5rem;
-            width: 56%;
-            height: 47%;
-            opacity: 0.92;
-        }
-
-        .hero-image-wrap img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .hero-heart {
-            right: 7%;
-            bottom: 5%;
-            font-size: 2.5rem;
-        }
-
-        .catalog-toolbar {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .size-filter {
-            justify-content: center;
-        }
-
-        .footer-benefits {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            padding: 1.4rem 1rem;
-        }
-
-        .footer-benefits > div {
-            font-size: 0.72rem;
-        }
-
-        .footer-bottom {
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 0.8rem 1rem;
-            text-align: center;
-        }
-
-        .footer-thanks {
-            display: none;
-        }
-    }
-
     *,
     *::before,
     *::after {
         transition-duration: 0.01ms !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .payment-widget {
+        min-height: 2.8rem;
+        gap: 0.65rem;
+        padding: 0.3rem 0.65rem;
+    }
+
+    .site-header.is-compact .header-main {
+        height: 3rem;
+        gap: 0.3rem;
+        padding-inline: 0.65rem;
+    }
+
+    .site-header.is-compact .brand-mark > .font-serif {
+        font-size: 1.3rem;
+    }
+
+    .site-header.is-compact .payment-widget {
+        min-height: 2.5rem;
+        gap: 0.3rem;
+        padding: 0 0.2rem;
+    }
+
+    .site-header.is-compact .payment-widget h2 {
+        font-size: 0.6rem;
+    }
+
+    .site-header.is-compact .bank-logos {
+        width: min(7.5rem, 32vw);
+        gap: 0.1rem;
+    }
+
+    .site-header.is-compact .bank-logo-frame {
+        height: 1.5rem;
+    }
+
+    .payment-widget h2 {
+        font-size: 0.72rem;
+    }
+
+    .bank-logos {
+        width: min(12rem, 58vw);
+        gap: 0.2rem;
+    }
+
+    .bank-logo-frame {
+        height: 1.8rem;
+    }
+
+    .header-search {
+        gap: 0.3rem;
+        padding: 0.35rem 0.5rem;
+    }
+
+    .header-search input {
+        width: 5rem;
+    }
+
+    .hero-inner {
+        min-height: 420px;
+        align-items: flex-start;
+        padding: 2.25rem 1.25rem;
+    }
+
+    .landing-view .hero-section {
+        min-height: calc(100svh - 108px);
+    }
+
+    .landing-view .hero-inner {
+        min-height: 100%;
+    }
+
+    .hero-copy {
+        max-width: 100%;
+    }
+
+    .hero-copy h1 {
+        font-size: clamp(2.5rem, 12vw, 3.6rem);
+    }
+
+    .hero-image-wrap {
+        top: auto;
+        right: -8%;
+        bottom: -0.5rem;
+        width: 56%;
+        height: 47%;
+        opacity: 0.92;
+    }
+
+    .hero-image-wrap img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .hero-heart {
+        right: 7%;
+        bottom: 5%;
+        font-size: 2.5rem;
+    }
+
+    .catalog-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .size-filter {
+        justify-content: center;
+    }
+
+    .footer-benefits {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: 1.4rem 1rem;
+    }
+
+    .footer-benefits > div {
+        font-size: 0.72rem;
+    }
+
+    .footer-bottom {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0.8rem 1rem;
+        text-align: center;
+    }
+
+    .footer-thanks {
+        display: none;
     }
 }

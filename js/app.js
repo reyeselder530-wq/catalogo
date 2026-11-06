@@ -340,6 +340,28 @@ function showToast(message) {
     toastTimeout = window.setTimeout(() => toast.classList.remove("is-visible"), 3200);
 }
 
+function setupStoreSharing() {
+    const shareUrl = new URL(window.location.href);
+    shareUrl.search = "";
+    shareUrl.hash = "catalogo";
+
+    document.getElementById("share-whatsapp").href =
+        `https://wa.me/?text=${encodeURIComponent(`Mira la tienda M/R Sandalias: ${shareUrl.href}`)}`;
+    document.getElementById("share-facebook").href =
+        `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl.href)}`;
+
+    document.getElementById("copy-store-link").addEventListener("click", async () => {
+        try {
+            await navigator.clipboard.writeText(shareUrl.href);
+            document.querySelector(".share-menu").open = false;
+            showToast("Enlace de la tienda copiado.");
+        } catch (error) {
+            console.warn("No se pudo copiar el enlace de la tienda.", error);
+            showToast("No se pudo copiar. Prueba compartir por WhatsApp o Facebook.");
+        }
+    });
+}
+
 window.toggleCart = toggleCart;
 window.filterProducts = filterProducts;
 window.filterCategory = filterCategory;
@@ -388,6 +410,7 @@ const compactHeaderOnScroll = () => {
 window.addEventListener("scroll", compactHeaderOnScroll, { passive: true });
 compactHeaderOnScroll();
 
+setupStoreSharing();
 renderProducts();
 renderCart();
 document.querySelectorAll(".cat-btn").forEach((button) => button.setAttribute("aria-pressed", "false"));
