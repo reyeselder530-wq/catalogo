@@ -3,6 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        if (window.location.hash.startsWith("#recovery_token=")) {
+            window.location.replace(`/admin/${window.location.search}${window.location.hash}`);
+        }
+    </script>
     <title>M/R | Catálogo de Sandalias</title>
     <!-- Google Fonts & Tailwind CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
