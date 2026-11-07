@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Pedidos | Administración M/R Sandalias</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/order-tracking.css?v=20261106-1">
+</head>
+<body class="tracking-page orders-admin-page">
+    <header class="tracking-header">
+        <a class="brand-mark" href="/" aria-label="M/R Sandalias, inicio">
+            <span class="font-serif text-3xl font-bold tracking-wide">M/R</span>
+            <span class="brand-subtitle">Sandalias</span>
+        </a>
+        <nav class="orders-admin-nav" aria-label="Administración">
+            <a href="/admin/">Catálogo</a>
+            <button id="admin-login" type="button">Iniciar sesión</button>
+            <button id="admin-logout" type="button" class="hidden">Cerrar sesión</button>
+        </nav>
+    </header>
+    <main class="orders-admin-main">
+        <div class="orders-admin-title">
+            <div>
+                <span class="tracking-eyebrow"><i class="fa-solid fa-lock" aria-hidden="true"></i> Panel privado</span>
+                <h1>Seguimiento de pedidos</h1>
+                <p>Actualiza el estado para que la clienta pueda consultarlo con su código.</p>
+            </div>
+            <button id="refresh-orders" type="button" class="tracking-refresh hidden">Actualizar lista</button>
+        </div>
+        <p id="admin-message" class="tracking-message" role="status" aria-live="polite">
+            Inicia sesión con la cuenta administrativa para ver los pedidos.
+        </p>
+        <section id="orders-list" class="orders-list hidden" aria-live="polite"></section>
+    </main>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="/js/order-admin.js"></script>
+</body>
+</html>

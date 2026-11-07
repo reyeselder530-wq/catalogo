@@ -1,0 +1,8 @@
+{
+  "name": "mr-sandalias-store",
+  "private": true,
+  "dependencies": {
+    "@netlify/blobs": "^10.0.0",
+    "@netlify/identity": "^2.0.1"
+  }
+}

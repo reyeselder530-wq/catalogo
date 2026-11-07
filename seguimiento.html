@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Consulta el estado de tu pedido de M/R Sandalias.">
+    <title>Seguimiento de pedidos | M/R Sandalias</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/order-tracking.css?v=20261106-1">
+</head>
+<body class="tracking-page">
+    <header class="tracking-header">
+        <a class="brand-mark" href="/" aria-label="M/R Sandalias, inicio">
+            <span class="font-serif text-3xl font-bold tracking-wide">M/R</span>
+            <span class="brand-subtitle">Sandalias</span>
+        </a>
+        <a href="/" class="tracking-back"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Volver a la tienda</a>
+    </header>
+    <main class="tracking-main">
+        <section class="tracking-card">
+            <span class="tracking-eyebrow"><i class="fa-solid fa-box-open" aria-hidden="true"></i> Estamos pendientes de ti</span>
+            <h1>Seguimiento de pedidos</h1>
+            <p>Escribe el código que recibiste al hacer tu pedido para consultar su estado.</p>
+            <form id="tracking-form" class="tracking-form">
+                <label for="tracking-code">Código de seguimiento</label>
+                <div class="tracking-input-row">
+                    <input id="tracking-code" name="code" type="text" autocomplete="off" maxlength="14" placeholder="Ejemplo: ABCD-EFGH-JK23" required>
+                    <button id="tracking-submit" type="submit">Consultar</button>
+                </div>
+            </form>
+            <p id="tracking-message" class="tracking-message" role="status" aria-live="polite"></p>
+            <section id="tracking-result" class="tracking-result hidden" aria-live="polite">
+                <div class="tracking-status-heading">
+                    <div>
+                        <span class="tracking-label">Pedido</span>
+                        <strong id="result-code"></strong>
+                    </div>
+                    <span id="result-status" class="tracking-status"></span>
+                </div>
+                <p id="result-updated" class="tracking-updated"></p>
+                <h2>Artículos</h2>
+                <ul id="result-items"></ul>
+            </section>
+            <p class="tracking-help">¿No encuentras tu código? <a href="https://wa.me/50585557483" target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp</a>.</p>
+        </section>
+    </main>
+    <script src="js/order-tracking.js"></script>
+</body>
+</html>

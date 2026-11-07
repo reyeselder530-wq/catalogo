@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/order-checkout.js" defer></script>
     <script>
         if (window.location.hash.startsWith("#recovery_token=")) {
             window.location.replace(`/admin/${window.location.search}${window.location.hash}`);
         }
     </script>
     <title>M/R | Catálogo de Sandalias</title>
+    <link rel="stylesheet" href="css/order-tracking.css?v=20261106-1">
     <!-- Google Fonts & Tailwind CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -57,6 +59,7 @@
                 <a class="nav-link" href="#catalogo">Catálogo</a>
                 <a class="nav-link" href="#nosotros">Nosotros</a>
                 <a class="nav-link" href="#contacto">Contacto</a>
+                <a class="nav-link" href="/seguimiento.html">Mis pedidos</a>
             </nav>
             <div class="flex items-center gap-3">
                 <label class="header-search flex items-center gap-2 rounded-full border border-brand-200 px-3 py-2">
@@ -152,11 +155,27 @@
         </div>
     </div>
 
+    <div id="order-confirmation" class="order-dialog hidden" role="dialog" aria-modal="true" aria-labelledby="order-confirmation-title">
+        <div class="order-dialog-card">
+            <button type="button" class="order-dialog-close" onclick="closeOrderConfirmation()" aria-label="Cerrar">&times;</button>
+            <span class="order-dialog-icon"><i class="fa-solid fa-circle-check" aria-hidden="true"></i></span>
+            <h2 id="order-confirmation-title">¡Pedido registrado!</h2>
+            <p>Guarda este código para consultar el estado de tu pedido:</p>
+            <strong id="order-confirmation-code" class="order-reference"></strong>
+            <a id="order-track-link" class="order-dialog-secondary" href="/seguimiento.html">Consultar estado del pedido</a>
+            <a id="order-whatsapp-link" class="order-dialog-primary" href="#" target="_blank" rel="noopener noreferrer">
+                Enviar pedido por WhatsApp
+            </a>
+            <p class="order-dialog-note">Tu pedido quedará pendiente mientras confirmamos los detalles por WhatsApp.</p>
+        </div>
+    </div>
+
     <footer id="nosotros" class="store-footer">
         <div class="footer-benefits">
             <div><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>Compra segura</span></div>
             <div><i class="fa-solid fa-truck-fast" aria-hidden="true"></i><span>Envíos confiables</span></div>
             <div><i class="fa-regular fa-heart" aria-hidden="true"></i><span>Atención personalizada</span></div>
+            <div><a href="/seguimiento.html"><i class="fa-solid fa-box" aria-hidden="true"></i> Seguimiento de pedidos</a></div>
             <div id="contacto"><strong>Síguenos:</strong><a href="https://wa.me/50585557483" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a></div>
         </div>
         <div class="footer-bottom">
