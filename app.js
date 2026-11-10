@@ -12,6 +12,9 @@ let activeCategory = "todos";
 let cart = [];
 let favoriteIds = [];
 let toastTimeout;
+let productImageHistoryToken = null;
+let pendingProductImageHistoryBacks = 0;
+let productImageHistorySequence = 0;
 
 function loadFavorites() {
     try {
@@ -273,15 +276,20 @@ function openProductImage(imageId) {
         return;
     }
 
+    const isAlreadyOpen = !dialog.classList.contains("hidden");
     preview.src = sourceImage.src;
     preview.alt = sourceImage.alt;
     dialog.classList.remove("hidden");
     dialog.setAttribute("aria-hidden", "false");
+    if (!isAlreadyOpen) {
+        productImageHistoryToken = `product-image-${Date.now()}-${++productImageHistorySequence}`;
+        history.pushState({ ...(history.state || {}), mrProductImageDialog: productImageHistoryToken }, "");
+    }
     document.getElementById("product-image-close").focus();
     document.body.classList.add("overflow-hidden");
 }
 
-function closeProductImage() {
+function hideProductImage() {
     const dialog = document.getElementById("product-image-dialog");
     if (!dialog || dialog.classList.contains("hidden")) {
         return;
@@ -291,6 +299,16 @@ function closeProductImage() {
     dialog.setAttribute("aria-hidden", "true");
     document.getElementById("product-image-preview").removeAttribute("src");
     document.body.classList.remove("overflow-hidden");
+    productImageHistoryToken = null;
+}
+
+function closeProductImage() {
+    const token = productImageHistoryToken;
+    hideProductImage();
+    if (token && history.state?.mrProductImageDialog === token) {
+        pendingProductImageHistoryBacks += 1;
+        history.back();
+    }
 }
 
 function changeQuantity(productId, size, amount, variant = "") {
@@ -507,6 +525,16 @@ window.addEventListener("hashchange", () => {
         "landing-view",
         !["catalogo", "nosotros", "contacto"].includes(targetId)
     );
+});
+
+window.addEventListener("popstate", () => {
+    if (pendingProductImageHistoryBacks > 0) {
+        pendingProductImageHistoryBacks -= 1;
+        return;
+    }
+    if (productImageHistoryToken) {
+        hideProductImage();
+    }
 });
 
 document.body.classList.toggle(
