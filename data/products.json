@@ -1,6 +1,110 @@
 {
   "products": [
     {
+      "id": "sandalia-01-tejida",
+      "name": "Tejida con tachuelas doradas",
+      "category": "Elegante",
+      "price": 180,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia tejida color beige con flecos y tachuelas doradas.",
+      "image": "assets/images/nuevos/sandalia-01-tejida-tachuelas.png"
+    },
+    {
+      "id": "sandalia-02-cadena",
+      "name": "Blanca con cadena dorada",
+      "category": "Elegante",
+      "price": 150,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia blanca con detalle de cadena dorada.",
+      "image": "assets/images/nuevos/sandalia-02-cadena-dorada.png"
+    },
+    {
+      "id": "sandalia-03-hebilla",
+      "name": "Nude con hebilla dorada",
+      "category": "Elegante",
+      "price": 150,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia color nude con hebilla dorada decorativa.",
+      "image": "assets/images/nuevos/sandalia-03-hebilla-dorada.png"
+    },
+    {
+      "id": "mono-cafe",
+      "name": "Sandalia de moño satinado",
+      "category": "Elegante",
+      "price": 200,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia con moño satinado y hebilla dorada, disponible en café, negro y blanco.",
+      "image": "assets/images/nuevos/sandalia-04-mono-cafe.png",
+      "variants": [
+        {
+          "name": "Café",
+          "image": "assets/images/nuevos/sandalia-04-mono-cafe.png"
+        },
+        {
+          "name": "Negro",
+          "image": "assets/images/nuevos/sandalia-08-mono-negro.png"
+        },
+        {
+          "name": "Blanco",
+          "image": "assets/images/nuevos/sandalia-10-mono-blanco.png"
+        }
+      ]
+    },
+    {
+      "id": "sandalia-05-flores",
+      "name": "Blanca con flores y perlas",
+      "category": "Elegante",
+      "price": 200,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia blanca con flores decorativas y detalles de perlas.",
+      "image": "assets/images/nuevos/sandalia-05-flores-perlas.png"
+    },
+    {
+      "id": "sandalia-06-cruzada",
+      "name": "Blanca cruzada con tachuelas",
+      "category": "Elegante",
+      "price": 200,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia blanca de tiras cruzadas con tachuelas doradas.",
+      "image": "assets/images/nuevos/sandalia-06-cruzada-tachuelas.png"
+    },
+    {
+      "id": "sandalia-07-h",
+      "name": "Blanca de diseño H",
+      "category": "Elegante",
+      "price": 180,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia blanca con banda frontal de diseño H.",
+      "image": "assets/images/nuevos/sandalia-07-diseno-h.png"
+    },
+    {
+      "id": "sandalia-09-floral",
+      "name": "Floral rosa con moño",
+      "category": "Elegante",
+      "price": 200,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia con estampado floral rosa y moño decorativo.",
+      "image": "assets/images/nuevos/sandalia-09-floral-rosa.png"
+    },
+    {
+      "id": "sandalia-11-perlas",
+      "name": "Tejida con perlas",
+      "category": "Elegante",
+      "price": 200,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia tejida color beige con perlas decorativas.",
+      "image": "assets/images/nuevos/sandalia-11-perlas-tejida.png"
+    },
+    {
+      "id": "sandalia-12-cruzada",
+      "name": "Tejida cruzada",
+      "category": "Elegante",
+      "price": 200,
+      "sizes": [35, 36, 37, 38, 39],
+      "description": "Sandalia tejida beige con tiras cruzadas y detalles dorados.",
+      "image": "assets/images/nuevos/sandalia-12-cruzada-tejida.png"
+    },
+    {
       "id": "floral",
       "name": "Floral",
       "category": "Elegante",
@@ -26,15 +130,6 @@
       "sizes": [35, 36, 37, 38, 39],
       "description": "Sandalias azules casuales, cómodas y elegantes.",
       "image": "assets/images/casuales/sandalias-casuales.png"
-    },
-    {
-      "id": "mono-cafe",
-      "name": "Moño Café",
-      "category": "Elegante",
-      "price": 200,
-      "sizes": [35, 36, 37, 38, 39],
-      "description": "Sandalia café con moño decorativo y plantilla floral.",
-      "image": "assets/images/elegantes/sandalia-mono-cafe.png"
     },
     {
       "id": "trenzada-morada",

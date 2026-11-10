@@ -11,7 +11,12 @@ async function createTrackedOrder() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 action: "create",
-                items: cart.map(({ productId, size, quantity }) => ({ productId, size, quantity }))
+                items: cart.map(({ productId, size, quantity, variant }) => ({
+                    productId,
+                    size,
+                    quantity,
+                    ...(variant ? { variant } : {})
+                }))
             })
         });
         const result = await response.json();
@@ -21,8 +26,10 @@ async function createTrackedOrder() {
 
         const lines = cart.map((item) => {
             const product = products.find((entry) => entry.id === item.productId);
-            const imageUrl = new URL(product.image, window.location.href).href;
-            return `- ${product.name} | Talla ${item.size} | Cantidad: ${item.quantity} | ${formatPrice(product.price * item.quantity)}\nFoto: ${imageUrl}`;
+            const selectedVariant = product.variants?.find((variant) => variant.name === item.variant);
+            const imageUrl = new URL(selectedVariant?.image || product.image, window.location.href).href;
+            const variantText = item.variant ? ` | Color: ${item.variant}` : "";
+            return `- ${product.name}${variantText} | Talla ${item.size} | Cantidad: ${item.quantity} | ${formatPrice(product.price * item.quantity)}\nFoto: ${imageUrl}`;
         });
         const message = [
             "Hola, quiero confirmar este pedido:",

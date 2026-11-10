@@ -51,11 +51,17 @@ function loadCart() {
                 && product.sizes.includes(Number(item.size))
                 && Number.isInteger(item.quantity)
                 && item.quantity > 0;
-        }).map((item) => ({
-            productId: item.productId,
-            size: Number(item.size),
-            quantity: item.quantity
-        }));
+        }).map((item) => {
+            const product = products.find((entry) => entry.id === item.productId);
+            const selectedVariant = product.variants?.find((variant) => variant.name === item.variant)
+                || product.variants?.[0];
+            return {
+                productId: item.productId,
+                size: Number(item.size),
+                quantity: item.quantity,
+                ...(selectedVariant ? { variant: selectedVariant.name } : {})
+            };
+        });
     } catch (error) {
         console.warn("No se pudo recuperar el carrito guardado.", error);
         return [];
@@ -102,10 +108,12 @@ function renderProducts(filteredProducts = products) {
         const productCategory = escapeHtml(product.category);
         const productDescription = escapeHtml(product.description);
         const productImage = escapeHtml(product.image);
+        const productVariants = Array.isArray(product.variants) ? product.variants : [];
         return `
         <article class="product-card overflow-hidden rounded-2xl border border-brand-100 bg-white shadow-sm" style="--card-index: ${Math.min(index, 6)}">
             <div class="product-image-wrap">
                 <img
+                    id="image-${productId}"
                     class="product-image"
                     src="${productImage}"
                     alt="Sandalia ${productName}"
@@ -130,6 +138,20 @@ function renderProducts(filteredProducts = products) {
                     <span class="whitespace-nowrap font-semibold text-brand-600">${formatPrice(product.price)}</span>
                 </div>
                 <p class="mb-5 min-h-10 text-sm leading-5 text-brand-600">${productDescription}</p>
+                ${productVariants.length ? `
+                    <label class="mb-2 block text-sm font-medium text-brand-700" for="variant-${productId}">
+                        Color
+                    </label>
+                    <select
+                        id="variant-${productId}"
+                        class="mb-4 w-full rounded-lg border border-brand-200 bg-white px-3 py-2 text-sm text-brand-800"
+                        onchange="changeProductVariant('${productId}')"
+                    >
+                        ${productVariants.map((variant) => `
+                            <option value="${escapeHtml(variant.name)}" data-image="${escapeHtml(variant.image)}">
+                                ${escapeHtml(variant.name)}
+                            </option>`).join("")}
+                    </select>` : ""}
                 <label class="mb-3 block text-sm font-medium text-brand-700" for="size-${productId}">
                     Selecciona tu talla
                 </label>
@@ -160,7 +182,8 @@ function filterProducts() {
             || (activeCategory === "favoritos"
                 ? favoriteIds.includes(product.id)
                 : product.category === activeCategory);
-        const matchesSearch = `${product.name} ${product.category} ${product.description}`
+        const variantNames = product.variants?.map((variant) => variant.name).join(" ") || "";
+        const matchesSearch = `${product.name} ${product.category} ${product.description} ${variantNames}`
             .toLocaleLowerCase("es")
             .includes(searchTerm);
         const matchesSize = selectedSize === "todos" || product.sizes.includes(Number(selectedSize));
@@ -203,6 +226,8 @@ function addToCart(productId) {
     const product = products.find((entry) => entry.id === productId);
     const sizeSelect = document.getElementById(`size-${productId}`);
     const size = Number(sizeSelect.value);
+    const variantSelect = document.getElementById(`variant-${productId}`);
+    const variant = variantSelect?.value || product?.variants?.[0]?.name;
 
     if (!product || !size) {
         showToast("Selecciona una talla antes de agregar el producto.");
@@ -210,20 +235,35 @@ function addToCart(productId) {
         return;
     }
 
-    const existingItem = cart.find((item) => item.productId === productId && item.size === size);
+    const existingItem = cart.find((item) =>
+        item.productId === productId && item.size === size && item.variant === variant
+    );
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
-        cart.push({ productId, size, quantity: 1 });
+        cart.push({ productId, size, quantity: 1, ...(variant ? { variant } : {}) });
     }
 
     saveCart();
     renderCart();
-    showToast(`${product.name}, talla ${size}, se agregó al carrito.`);
+    showToast(`${product.name}${variant ? ` color ${variant}` : ""}, talla ${size}, se agregó al carrito.`);
 }
 
-function changeQuantity(productId, size, amount) {
-    const item = cart.find((entry) => entry.productId === productId && entry.size === size);
+function changeProductVariant(productId) {
+    const select = document.getElementById(`variant-${productId}`);
+    const image = document.getElementById(`image-${productId}`);
+    const selectedOption = select?.selectedOptions[0];
+    if (image && selectedOption) {
+        const product = products.find((entry) => entry.id === productId);
+        image.src = selectedOption.dataset.image;
+        image.alt = `Sandalia ${product?.name || ""} color ${selectedOption.value}`;
+    }
+}
+
+function changeQuantity(productId, size, amount, variant = "") {
+    const item = cart.find((entry) =>
+        entry.productId === productId && entry.size === size && entry.variant === (variant || undefined)
+    );
     if (!item) {
         return;
     }
@@ -237,8 +277,10 @@ function changeQuantity(productId, size, amount) {
     renderCart();
 }
 
-function removeFromCart(productId, size) {
-    cart = cart.filter((item) => item.productId !== productId || item.size !== size);
+function removeFromCart(productId, size, variant = "") {
+    cart = cart.filter((item) =>
+        item.productId !== productId || item.size !== size || item.variant !== (variant || undefined)
+    );
     saveCart();
     renderCart();
 }
@@ -268,7 +310,12 @@ function renderCart() {
         const product = products.find((entry) => entry.id === item.productId);
         const productId = escapeHtml(item.productId);
         const productName = escapeHtml(product.name);
-        const productImage = escapeHtml(product.image);
+        const productVariant = product.variants?.find((variant) => variant.name === item.variant);
+        const productImage = escapeHtml(productVariant?.image || product.image);
+        const variantLabel = item.variant
+            ? `<span class="text-sm text-brand-600">Color ${escapeHtml(item.variant)}</span>`
+            : "";
+        const variantArgument = escapeHtml(JSON.stringify(item.variant || ""));
         return `
             <article class="flex gap-4 border-b border-brand-100 pb-4">
                 <img class="cart-image" src="${productImage}" alt="" loading="lazy">
@@ -276,24 +323,25 @@ function renderCart() {
                     <div class="flex items-start justify-between gap-2">
                         <div>
                             <h3 class="font-semibold text-brand-800">${productName}</h3>
+                            ${variantLabel}
                             <p class="text-sm text-brand-600">Talla ${item.size}</p>
                         </div>
                         <button
                             type="button"
-                            onclick="removeFromCart('${productId}', ${item.size})"
+                            onclick="removeFromCart('${productId}', ${item.size}, ${variantArgument})"
                             class="text-brand-400 transition-colors hover:text-red-600"
-                            aria-label="Quitar ${productName}, talla ${item.size}"
+                            aria-label="Quitar ${productName}${item.variant ? ` color ${escapeHtml(item.variant)}` : ""}, talla ${item.size}"
                         >
                             <i class="fa-regular fa-trash-can"></i>
                         </button>
                     </div>
                     <div class="mt-3 flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <button type="button" onclick="changeQuantity('${productId}', ${item.size}, -1)" class="quantity-btn" aria-label="Reducir cantidad">
+                            <button type="button" onclick="changeQuantity('${productId}', ${item.size}, -1, ${variantArgument})" class="quantity-btn" aria-label="Reducir cantidad">
                                 <i class="fa-solid fa-minus"></i>
                             </button>
                             <span class="min-w-4 text-center text-sm font-semibold">${item.quantity}</span>
-                            <button type="button" onclick="changeQuantity('${productId}', ${item.size}, 1)" class="quantity-btn" aria-label="Aumentar cantidad">
+                            <button type="button" onclick="changeQuantity('${productId}', ${item.size}, 1, ${variantArgument})" class="quantity-btn" aria-label="Aumentar cantidad">
                                 <i class="fa-solid fa-plus"></i>
                             </button>
                         </div>
@@ -331,8 +379,10 @@ function checkoutWhatsApp() {
 
     const lines = cart.map((item) => {
         const product = products.find((entry) => entry.id === item.productId);
-        const imageUrl = new URL(product.image, window.location.href).href;
-        return `- ${product.name} | Talla ${item.size} | Cantidad: ${item.quantity} | ${formatPrice(product.price * item.quantity)}\nFoto: ${imageUrl}`;
+        const selectedVariant = product.variants?.find((variant) => variant.name === item.variant);
+        const imageUrl = new URL(selectedVariant?.image || product.image, window.location.href).href;
+        const variantText = item.variant ? ` | Color: ${item.variant}` : "";
+        return `- ${product.name}${variantText} | Talla ${item.size} | Cantidad: ${item.quantity} | ${formatPrice(product.price * item.quantity)}\nFoto: ${imageUrl}`;
     });
     const total = cart.reduce((sum, item) => {
         const product = products.find((entry) => entry.id === item.productId);
@@ -458,7 +508,19 @@ function isValidProduct(product) {
         && typeof product.description === "string"
         && typeof product.image === "string"
         && product.image.replace(/^\//, "").startsWith("assets/images/")
-        && !product.image.split("/").includes("..");
+        && !product.image.split("/").includes("..")
+        && (!product.variants || (
+            Array.isArray(product.variants)
+            && product.variants.length > 0
+            && product.variants.every((variant) =>
+                variant
+                && typeof variant.name === "string"
+                && variant.name.trim().length > 0
+                && typeof variant.image === "string"
+                && variant.image.replace(/^\//, "").startsWith("assets/images/")
+                && !variant.image.split("/").includes("..")
+            )
+        ));
 }
 
 async function initializeStore() {

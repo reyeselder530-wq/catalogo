@@ -91,9 +91,26 @@ async function createOrder(request, body) {
             return respond(400, { error: "Uno de los productos, tallas o cantidades ya no es válido." });
         }
 
+        const variants = product.variants;
+        if (variants !== undefined && (!Array.isArray(variants) || variants.length === 0
+            || variants.some((variant) => !variant || typeof variant.name !== "string" || !variant.name.trim()))) {
+            return respond(500, { error: "Las variantes del catálogo no tienen un formato válido." });
+        }
+        if (requestedItem.variant !== undefined && typeof requestedItem.variant !== "string") {
+            return respond(400, { error: "El color seleccionado no es válido." });
+        }
+        const variantName = typeof requestedItem.variant === "string" ? requestedItem.variant : "";
+        const selectedVariant = variants?.length
+            ? variants.find((variant) => variant.name === variantName) || (!variantName ? variants[0] : null)
+            : null;
+        if ((variants?.length && !selectedVariant) || (!variants?.length && variantName)) {
+            return respond(400, { error: "El color seleccionado ya no está disponible." });
+        }
+
         items.push({
             productId: product.id,
             name: product.name,
+            ...(selectedVariant ? { color: selectedVariant.name } : {}),
             size,
             quantity,
             unitPrice: product.price
@@ -142,7 +159,7 @@ async function lookupOrder(body) {
         status: order.status,
         createdAt: order.createdAt,
         updatedAt: order.updatedAt,
-        items: order.items.map(({ name, size, quantity }) => ({ name, size, quantity })),
+        items: order.items.map(({ name, color, size, quantity }) => ({ name, color, size, quantity })),
         total: order.total
     });
 }

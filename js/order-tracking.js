@@ -30,7 +30,7 @@ function renderOrder(order) {
     const items = document.getElementById("result-items");
     items.replaceChildren(...order.items.map((item) => {
         const row = document.createElement("li");
-        row.textContent = `${item.name} · Talla ${item.size} · Cantidad ${item.quantity}`;
+        row.textContent = `${item.name}${item.color ? ` · Color ${item.color}` : ""} · Talla ${item.size} · Cantidad ${item.quantity}`;
         return row;
     }));
     result.classList.remove("hidden");

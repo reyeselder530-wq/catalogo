@@ -55,7 +55,7 @@ function renderOrders(orders) {
                 ${status.charAt(0).toUpperCase()}${status.slice(1)}
             </option>`).join("");
         const items = order.items.map((item) =>
-            `<li>${escapeHtml(item.name)} · Talla ${item.size} · Cantidad ${item.quantity}</li>`
+            `<li>${escapeHtml(item.name)}${item.color ? ` · Color ${escapeHtml(item.color)}` : ""} · Talla ${item.size} · Cantidad ${item.quantity}</li>`
         ).join("");
         const createdAt = new Intl.DateTimeFormat("es-NI", {
             dateStyle: "medium",

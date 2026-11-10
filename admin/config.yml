@@ -53,3 +53,14 @@ collections:
               - label: "Fotografía"
                 name: "image"
                 widget: "image"
+              - label: "Colores disponibles"
+                name: "variants"
+                widget: "list"
+                required: false
+                fields:
+                  - label: "Color"
+                    name: "name"
+                    widget: "string"
+                  - label: "Fotografía del color"
+                    name: "image"
+                    widget: "image"
