@@ -118,6 +118,11 @@ function renderProducts(filteredProducts = products) {
                     src="${productImage}"
                     alt="Sandalia ${productName}"
                     loading="lazy"
+                    role="button"
+                    tabindex="0"
+                    aria-label="Ver imagen completa: ${productName}"
+                    onclick="openProductImage('image-${productId}')"
+                    onkeydown="if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openProductImage('image-${productId}'); }"
                 >
                 <span class="product-category">${productCategory}</span>
                 <button
@@ -258,6 +263,34 @@ function changeProductVariant(productId) {
         image.src = selectedOption.dataset.image;
         image.alt = `Sandalia ${product?.name || ""} color ${selectedOption.value}`;
     }
+}
+
+function openProductImage(imageId) {
+    const sourceImage = document.getElementById(imageId);
+    const dialog = document.getElementById("product-image-dialog");
+    const preview = document.getElementById("product-image-preview");
+    if (!sourceImage || !dialog || !preview) {
+        return;
+    }
+
+    preview.src = sourceImage.src;
+    preview.alt = sourceImage.alt;
+    dialog.classList.remove("hidden");
+    dialog.setAttribute("aria-hidden", "false");
+    document.getElementById("product-image-close").focus();
+    document.body.classList.add("overflow-hidden");
+}
+
+function closeProductImage() {
+    const dialog = document.getElementById("product-image-dialog");
+    if (!dialog || dialog.classList.contains("hidden")) {
+        return;
+    }
+
+    dialog.classList.add("hidden");
+    dialog.setAttribute("aria-hidden", "true");
+    document.getElementById("product-image-preview").removeAttribute("src");
+    document.body.classList.remove("overflow-hidden");
 }
 
 function changeQuantity(productId, size, amount, variant = "") {
@@ -446,6 +479,8 @@ window.addToCart = addToCart;
 window.changeQuantity = changeQuantity;
 window.removeFromCart = removeFromCart;
 window.checkoutWhatsApp = checkoutWhatsApp;
+window.openProductImage = openProductImage;
+window.closeProductImage = closeProductImage;
 
 function showCatalog() {
     document.body.classList.remove("landing-view");
@@ -488,6 +523,10 @@ window.addEventListener("scroll", compactHeaderOnScroll, { passive: true });
 compactHeaderOnScroll();
 
 document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+        closeProductImage();
+    }
+
     if (event.key === "Escape" && !document.getElementById("cart-drawer").classList.contains("translate-x-full")) {
         toggleCart();
     }
